@@ -7,8 +7,8 @@
     <!-- <{tag} {attribute}>{content}</{tag}> -->
     <h1>Ferien-Countdown🤓</h1>
     <p id="FerienCounter">7 Woche(n), 5 Tag(e), 13 Stunde(n), 58 Minute(n), 1 Sekunde(n)</p>
-    <h3>bis zu den Winterferien!</h3>
-    <select> id = "ferienAuswahl"
+    <h3 id = "ferienArt">bis zu den Winterferien!</h3>
+    <select id = "ferienAuswahl">
       <option value="winterferien-2022-TH">Winterferien⛄</option>
       <option value="osterferien-2022-TH" >Osterferien🐇</option>
       <option value="pfingstferien-2022-TH" >Pfingsferien</option>
@@ -69,13 +69,19 @@
         </tbody>
     </table>
     <a href="https://github.com/lgh-ag/lghag.de">KOSTENLOSES 50000k TEURES GEWINNSPIEL MIT 10000000% CHANCE ZU GEWINNEN. KLICKE JETZT AUF DEN LINK UND GEWINNE HOLE ES DIR AB. ZU 1 MILLIONEN KEIN VIRUS ODER SCAM!!!!!!!!! KAUFE ES JETZT SOFORT ODER DIE DOMOMÄNNER STEHEN IN EINEM TAG VOR DEINER TÜR UND GEBEN DIR EINS AUF DIE MÜTZE!!!!!!!!!! ALSO KLICKE JETZT SOFORT AUF DIESEN WURDENSCHÖNEN LINK UND MELDE DICH AN UND BAMM!!! DU BIST DER REICHSTE MANN DER WELT MIT SCHÖNEN FRAUEN UND TEUREN AUTOS!!!!!!!!!!!!! KLICHE JETZT DRAUF LIES DIR DEN TEXT NICHT WEITER DURCH!!!!! ICH HABE DEFINITIV KEINE LANGEWEILE ODER SO SONDER MÖCHTE DIR NUR EIN WUNDERSCHÖNES GESCHENK BRINGEN. WENN DU SCHON DABEI BIST DIESEN TEXT ZU LESEN DANN SCHAU DOCH MAL AUF MEINEM TWITCH ACCOUNT VORBEI UND FOLLOW UND SUB REIN!!!!!!!! MACH ES JETZT SOFORT!!!!!!! ICH MÖCHTE DER GRÖ?TE STREAMER EVER WERDEN!!!!!!!!! FOLGE DESWEGEN JETZT REIN UND DU KRIEGST DAS HUNDERTFACHE AN FOLLOWERN ZURÜCK!!!!!!!!!!!</a>
+    
+    <script src="https://cdn.jsdelivr.net/npm/underscore@latest/underscore-umd-min.js"></script>
+
     <script>
       var json = "";
       var obj = null;
+      var ferienDate= null;
 
       function reqListener() {
         json = this.responseText;
         obj = JSON.parse(json);
+
+        selectChange();
         getSeconds();
       }
 
@@ -86,7 +92,6 @@
     oReq.send(); 
 
     function getSeconds() {
-      var ferienDate = Date.parse(obj[0].start);
       var currentDate = Date.now();
 
       var milli = ferienDate - currentDate;
@@ -94,23 +99,18 @@
 
       var wochen = Math.floor((milli - abgezogen) /1000 / 60 / 60 / 24 / 7);
       abgezogen = abgezogen + wochen * 1000 * 60 * 60 * 24 * 7
-      console.log(wochen);
 
       var tage = Math.floor((milli - abgezogen) /1000 / 60 / 60 / 24);
       abgezogen = abgezogen + tage * 1000 * 60 * 60 * 24
-      console.log(tage);
 
       var stunden = Math.floor((milli - abgezogen) /1000 / 60 / 60);
       abgezogen = abgezogen + stunden * 1000 * 60 * 60
-      console.log(stunden);
 
       var minuten = Math.floor((milli - abgezogen) /1000 / 60);
       abgezogen = abgezogen + minuten * 1000 * 60
-      console.log(minuten);
 
       var sekunden = Math.floor((milli - abgezogen) /1000);
       abgezogen = abgezogen + sekunden *1000;
-      console.log(sekunden);
 
       console.log("------------------------")
 
@@ -121,10 +121,12 @@
     var select = document.getElementById("ferienAuswahl");
 
     function selectChange () {
-      console.log(select.value);
-}
+      ferienDate = Date.parse (_.where(obj, {"slug": select.value})[0].start);
+      document.getElementById("ferienArt").innerHTML = "bis zu den " + _.where(obj, {"slug": select.value})[0].name + "!";
+  }
     
-    select.onchange = selectChang;
+
+    select.onchange = selectChange;
     </script>  
   </body>
 </html>  
