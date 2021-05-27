@@ -6,7 +6,7 @@
   <body>
     <!-- <{tag} {attribute}>{content}</{tag}> -->
     <h1>Ferien-Countdown🤓</h1>
-    <p id="FerienCounter">7 Woche(n), 5 Tag(e), 13 Stunde(n), 58 Minute(n), 1 Sekunde(n)</p>
+    <p id="FerienCounter"> ...Loading... </p>
     <h3 id = "ferienArt">bis zu den Winterferien!</h3>
     <select id = "ferienAuswahl">
       <option value="winterferien-2022-TH">Winterferien⛄</option>
@@ -18,7 +18,7 @@
     </select>
     <br>
     <br>
-    <table border="3" >
+    <table id="datenTabelle" border="3">
       <thead>
         <tr>
           <td>
@@ -32,42 +32,10 @@
           </td>
         </tr>
       </thead>
-        <tbody>
-          <tr>
-            <td>
-              <p>Sommerferien☀</p>
-            </td>
-            <td>
-              <p>21.01.2021🤗</p>
-            </td>
-            <td>
-              <p>21.05.2021😴</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Osterferien🐇</p>
-            </td>
-            <td>
-              <p>34.04.2021🤗</p>
-            </td>
-            <td>
-              <p>12.01.2021😴</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Winterferien⛄</p>
-            </td>
-            <td>
-              <p>21.06.2021🤗</p>
-            </td>
-            <td>
-              <p>21.08.2021😴</p>
-            </td>
-          </tr>
-        </tbody>
+      <tbody> 
+      </tbody>
     </table>
+    <br>
     <a href="https://github.com/lgh-ag/lghag.de">KOSTENLOSES 50000k TEURES GEWINNSPIEL MIT 10000000% CHANCE ZU GEWINNEN. KLICKE JETZT AUF DEN LINK UND GEWINNE HOLE ES DIR AB. ZU 1 MILLIONEN KEIN VIRUS ODER SCAM!!!!!!!!! KAUFE ES JETZT SOFORT ODER DIE DOMOMÄNNER STEHEN IN EINEM TAG VOR DEINER TÜR UND GEBEN DIR EINS AUF DIE MÜTZE!!!!!!!!!! ALSO KLICKE JETZT SOFORT AUF DIESEN WURDENSCHÖNEN LINK UND MELDE DICH AN UND BAMM!!! DU BIST DER REICHSTE MANN DER WELT MIT SCHÖNEN FRAUEN UND TEUREN AUTOS!!!!!!!!!!!!! KLICHE JETZT DRAUF LIES DIR DEN TEXT NICHT WEITER DURCH!!!!! ICH HABE DEFINITIV KEINE LANGEWEILE ODER SO SONDER MÖCHTE DIR NUR EIN WUNDERSCHÖNES GESCHENK BRINGEN. WENN DU SCHON DABEI BIST DIESEN TEXT ZU LESEN DANN SCHAU DOCH MAL AUF MEINEM TWITCH ACCOUNT VORBEI UND FOLLOW UND SUB REIN!!!!!!!! MACH ES JETZT SOFORT!!!!!!! ICH MÖCHTE DER GRÖ?TE STREAMER EVER WERDEN!!!!!!!!! FOLGE DESWEGEN JETZT REIN UND DU KRIEGST DAS HUNDERTFACHE AN FOLLOWERN ZURÜCK!!!!!!!!!!!</a>
     
     <script src="https://cdn.jsdelivr.net/npm/underscore@latest/underscore-umd-min.js"></script>
@@ -83,6 +51,7 @@
 
         selectChange();
         getSeconds();
+        tabelleDatenHolen89;
       }
 
     var oReq = new XMLHttpRequest();
@@ -92,41 +61,57 @@
     oReq.send(); 
 
     function getSeconds() {
-      var currentDate = Date.now();
+        var currentDate = Date.now();
 
-      var milli = ferienDate - currentDate;
-      var abgezogen = 0;
+        var milli = ferienDate - currentDate;
+        var abgezogen = 0;
 
-      var wochen = Math.floor((milli - abgezogen) /1000 / 60 / 60 / 24 / 7);
-      abgezogen = abgezogen + wochen * 1000 * 60 * 60 * 24 * 7
+        var wochen = Math.floor(milli / 1000 / 60 / 60 / 24 / 7);
+        abgezogen = abgezogen + wochen * 1000 * 60 * 60 * 24 * 7;
 
-      var tage = Math.floor((milli - abgezogen) /1000 / 60 / 60 / 24);
-      abgezogen = abgezogen + tage * 1000 * 60 * 60 * 24
+        var tage = Math.floor((milli - abgezogen) / 1000 / 60 / 60 / 24);
+        abgezogen = abgezogen + tage * 1000 * 60 * 60 * 24;
 
-      var stunden = Math.floor((milli - abgezogen) /1000 / 60 / 60);
-      abgezogen = abgezogen + stunden * 1000 * 60 * 60
+        var stunden = Math.floor((milli - abgezogen) / 1000 / 60 / 60);
+        abgezogen = abgezogen + stunden * 1000 * 60 * 60;
 
-      var minuten = Math.floor((milli - abgezogen) /1000 / 60);
-      abgezogen = abgezogen + minuten * 1000 * 60
+        var minuten = Math.floor((milli - abgezogen) / 1000 / 60);
+        abgezogen = abgezogen + minuten * 1000 * 60;
 
-      var sekunden = Math.floor((milli - abgezogen) /1000);
-      abgezogen = abgezogen + sekunden *1000;
+        var sekunden = Math.floor((milli - abgezogen) / 1000);
 
-      console.log("------------------------")
+        document.getElementById("ferienCounter").innerText = "Das sind : " + wochen +  " Wochen, " + tage + " Tage, " + stunden + " Stunden, " + minuten + " Minuten und " + sekunden + " Sekunden";
+        setTimeout(getSeconds, 1000);
+      }
 
-      document.getElementById("FerienCounter").innerText = "Das sind : " + wochen + " Wochen, " + tage + "  Tage, " + stunden + " Stunden, " + minuten + " Minuten, " + sekunden + " Sekunde ";
-      setTimeout(getSeconds, 1000);
-    }
+      var select = document.getElementById("ferienAuswahl");
 
-    var select = document.getElementById("ferienAuswahl");
+      function selectChange() {
+        ferienDate = Date.parse(_.where(obj, {"slug": select.value + new Date().getFullYear() + "-TH"})[0].start);
+        var ferien = _.where(obj, {"slug": select.value + new Date().getFullYear() + "-TH"})[0].name;
+        document.getElementById("ferienArt").innerHTML = "bis zu den " + ferien.slice(0, 1).toUpperCase() + ferien.slice(1) + "! 📅";
+        getSeconds();
+      }
+      
 
-    function selectChange () {
-      ferienDate = Date.parse (_.where(obj, {"slug": select.value})[0].start);
-      document.getElementById("ferienArt").innerHTML = "bis zu den " + _.where(obj, {"slug": select.value})[0].name + "!";
-  }
-    
+      select.onchange = selectChange;
 
-    select.onchange = selectChange;
-    </script>  
+      function tabelleDatenHolen() {
+        var i;
+        for (i = 0; i < obj.length; i++) {
+          tabelleAusfuellen(i + 1, obj[i].name, new Date(obj[i].start), new Date(obj[i].end));
+        }
+      }
+      function tabelleAusfuellen(targetRow, cell1text, cell2text, cell3text) {
+        var table = document.getElementById("datenTabelle");
+        var row = table.insertRow(targetRow);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        cell1.innerHTML = cell1text.slice(0, 1).toUpperCase() + cell1text.slice(1);
+        cell2.innerHTML = cell2text.getDate() + "." + cell2text.getMonth() + "." + cell2text.getFullYear();
+        cell3.innerHTML = cell3text.getDate() + "." + cell3text.getMonth() + "." + cell3text.getFullYear();
+      }
+    </script>
   </body>
-</html>  
+</html>
